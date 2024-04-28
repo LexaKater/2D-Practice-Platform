@@ -8,8 +8,6 @@ public class TrigerZone : MonoBehaviour
     {
         if (collision.TryGetComponent(out PlayerMovement player))
             Player = player;
-
-       //привет
     }
 
     private void OnTriggerExit2D(Collider2D collision)
