@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] float _rayDistance;
-    [SerializeField] LayerMask _layer;
+    [SerializeField] private float _rayDistance;
+    [SerializeField] private LayerMask _layer;
+    [SerializeField] private float _damage;
+    [SerializeField] private float _maxTimeForAttack;
 
     private Vector2 _direction;
-
-    private float _damage = 25;
-    private float _maxTimeFoattack = 1f;
-    private float _currentTimeForAttack = 1f;
+    private float _currentTimeForAttack;
     private bool _isAttack = false;
+
+    private void Start() => _currentTimeForAttack = _maxTimeForAttack;
 
     private void Update() => FindEnemy();
 
@@ -32,7 +33,7 @@ public class PlayerAttack : MonoBehaviour
         }
         else
         {
-            _currentTimeForAttack = _maxTimeFoattack;
+            _currentTimeForAttack = _maxTimeForAttack;
             _isAttack = false;
         }
     }
@@ -46,7 +47,7 @@ public class PlayerAttack : MonoBehaviour
         }
         else
         {
-            _currentTimeForAttack = _maxTimeFoattack;
+            _currentTimeForAttack = _maxTimeForAttack;
             _isAttack = false;
         }
     }

@@ -4,7 +4,8 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] private float _maxHealth;
-    [SerializeField] private float _currentHealth;
+
+    private float _currentHealth;
 
     public event Action HealthChanged;
     public event Action OwnerDied;
@@ -39,13 +40,9 @@ public class Health : MonoBehaviour
         {
             _currentHealth -= damage;
             HealthChanged?.Invoke();
-            Debug.Log(_currentHealth);
         }
 
         if (_currentHealth <= 0)
-        {
             OwnerDied?.Invoke();
-            Debug.Log(_currentHealth);
-        }
     }
 }

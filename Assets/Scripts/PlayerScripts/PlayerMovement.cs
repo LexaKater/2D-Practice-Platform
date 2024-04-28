@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField, Range(0f, 10f)] private float _moveSpeed;
     [SerializeField, Range(0f, 10f)] private float _jumpSpeed;
+    [SerializeField, Range(0f, 10f)] private float _rayDistance;
 
     private Animator _playerAnimator;
     private SpriteRenderer _playerSprite;
@@ -14,7 +15,6 @@ public class PlayerMovement : MonoBehaviour
     private bool _isJump;
     private bool _isDoubleJump;
     private bool _isGrounded;
-    private float _rayDistance = 0.9f;
     private string _runParameter = "speed";
     private string _jumpParameter = "isJump";
 
