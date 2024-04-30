@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    [SerializeField] private TrigerZone _trigerZone;
+    [SerializeField] private PlayerSearcher _searcher;
     [SerializeField, Range(0f, 10f)] private float _rangeForAttack;
     [SerializeField, Range(0f, 10f)] private float _maxTimeForAttack;
     [SerializeField, Range(0f, 10f)] private float _damage;
@@ -17,7 +17,7 @@ public class EnemyAttack : MonoBehaviour
 
     private void FindEnemy()
     {
-        if (_trigerZone.Player == null)
+        if (_searcher.Player == null)
         {
             _currentTimeForAttack = _maxTimeForAttack;
             _isAttack = false;
@@ -26,15 +26,15 @@ public class EnemyAttack : MonoBehaviour
         }
         else
         {
-            _target = _trigerZone.Player.transform;
+            _target = _searcher.Player.transform;
 
             Vector2 distanceToPlayer = transform.position - _target.position;
 
-            if (_trigerZone.Player.TryGetComponent(out Health health) || distanceToPlayer.x < _rangeForAttack)
+            if (_searcher.Player.TryGetComponent(out Health health) || distanceToPlayer.x < _rangeForAttack)
             {
                 Attack();
 
-                if (_isAttack == false)
+                if (_isAttack)
                     health.TakeDamage(_damage);
             }
         }
@@ -45,12 +45,12 @@ public class EnemyAttack : MonoBehaviour
         if (_currentTimeForAttack >= 0)
         {
             _currentTimeForAttack -= Time.deltaTime;
-            _isAttack = true;
+            _isAttack = false;
         }
         else
         {
             _currentTimeForAttack = _maxTimeForAttack;
-            _isAttack = false;
+            _isAttack = true;
         }
     }
 }

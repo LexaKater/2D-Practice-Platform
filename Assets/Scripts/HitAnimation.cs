@@ -5,8 +5,11 @@ public class HitAnimation : MonoBehaviour
 {
     [SerializeField] private Health _health;
 
+    public readonly int Triger = Animator.StringToHash(nameof(TakeDamage));
+
+    private const string TakeDamage = nameof(TakeDamage);
+
     private Animator _animator;
-    private string _trigerName = "TakeDamage";
 
     private void Start() => _animator = GetComponent<Animator>();
 
@@ -14,5 +17,5 @@ public class HitAnimation : MonoBehaviour
 
     private void OnDisable() => _health.HealthChanged += PlayAnimation;
 
-    private void PlayAnimation() => _animator.SetTrigger(_trigerName);
+    private void PlayAnimation() => _animator.SetTrigger(Triger);
 }

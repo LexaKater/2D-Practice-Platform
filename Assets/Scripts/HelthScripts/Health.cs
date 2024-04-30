@@ -3,46 +3,34 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private float _maxHealth;
-
-    private float _currentHealth;
+    public float MaxHealth { get; private set; } = 100;
+    public float CurrentHealth { get; private set; }
 
     public event Action HealthChanged;
     public event Action OwnerDied;
 
-    private void Start() => _currentHealth = _maxHealth;
+    private void Start() => CurrentHealth = MaxHealth;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void TakeHeal(float heal)
     {
-        if (collision.TryGetComponent(out HealKit healKit))
-        {
-            float healthAfterHeal = _currentHealth + healKit.Heal;
-
-            if (_currentHealth == _maxHealth)
-                return;
-
-            if (healthAfterHeal > _maxHealth)
-            {
-                _currentHealth = _maxHealth;
-                Destroy(collision.gameObject);
-            }
-            else
-            {
-                _currentHealth += healKit.Heal;
-                Destroy(collision.gameObject);
-            }
-        }
+        if (heal >= 0)
+            CurrentHealth += heal;
     }
 
     public void TakeDamage(float damage)
     {
-        if (_currentHealth > 0)
+        if (damage >= 0)
         {
-            _currentHealth -= damage;
-            HealthChanged?.Invoke();
-        }
+            if (CurrentHealth > 0)
+            {
+                float minHealth = 0;
 
-        if (_currentHealth <= 0)
-            OwnerDied?.Invoke();
+                CurrentHealth = Mathf.Clamp(CurrentHealth, minHealth, CurrentHealth - damage);
+                HealthChanged?.Invoke();
+            }
+
+            if (CurrentHealth <= 0)
+                OwnerDied?.Invoke();
+        }
     }
 }

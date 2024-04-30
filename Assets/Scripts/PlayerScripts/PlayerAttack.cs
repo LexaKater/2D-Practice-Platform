@@ -3,9 +3,9 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private float _rayDistance;
-    [SerializeField] private LayerMask _layer;
     [SerializeField] private float _damage;
     [SerializeField] private float _maxTimeForAttack;
+    [SerializeField] private LayerMask _layer;
 
     private Vector2 _direction;
     private float _currentTimeForAttack;
@@ -27,7 +27,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 Attack();
 
-                if (_isAttack == false)
+                if (_isAttack)
                     health.TakeDamage(_damage);
             }
         }
@@ -40,15 +40,15 @@ public class PlayerAttack : MonoBehaviour
 
     private void Attack()
     {
-        if (_currentTimeForAttack >= 0)
+        if (_currentTimeForAttack > 0)
         {
             _currentTimeForAttack -= Time.deltaTime;
-            _isAttack = true;
+            _isAttack = false;
         }
         else
         {
             _currentTimeForAttack = _maxTimeForAttack;
-            _isAttack = false;
+            _isAttack = true;
         }
     }
 

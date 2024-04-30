@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TrigerZone : MonoBehaviour
+public class PlayerSearcher : MonoBehaviour
 {
     public PlayerMovement Player { get; private set; }
 

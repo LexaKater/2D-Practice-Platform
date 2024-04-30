@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private Transform[] _waypoints;
-    [SerializeField] private TrigerZone _trigerZone;
+    [SerializeField] private PlayerSearcher _searcher;
     [SerializeField, Range(0f, 10f)] private float _speed;
     [SerializeField, Range(-10f, 10f)] private float _rangeForStop;
 
@@ -14,7 +14,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Move()
     {
-        if (_trigerZone.Player == null)
+        if (_searcher.Player == null)
         {
             if (transform.position == _waypoints[_currentWaypoint].position)
                 _currentWaypoint = ++_currentWaypoint % _waypoints.Length;
@@ -23,9 +23,9 @@ public class EnemyMovement : MonoBehaviour
         }
         else
         {
-            _target = _trigerZone.Player.transform.position;
+            _target = _searcher.Player.transform.position;
 
-            Vector2 distanceToPlayer = transform.position - _trigerZone.Player.transform.position;
+            Vector2 distanceToPlayer = transform.position - _searcher.Player.transform.position;
 
             if (distanceToPlayer.x < _rangeForStop)
                 return;

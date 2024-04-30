@@ -8,6 +8,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Range(0f, 10f)] private float _moveSpeed;
     [SerializeField, Range(0f, 10f)] private float _jumpSpeed;
     [SerializeField, Range(0f, 10f)] private float _rayDistance;
+    [SerializeField] private LayerMask _layer;
+
+    public readonly int SpeedParameter = Animator.StringToHash(nameof(Speed));
+    public readonly int IsJumpParameter = Animator.StringToHash(nameof(IsJump));
+
+    private const string Speed = nameof(Speed);
+    private const string IsJump = nameof(IsJump);
 
     private Animator _playerAnimator;
     private SpriteRenderer _playerSprite;
@@ -15,8 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _isJump;
     private bool _isDoubleJump;
     private bool _isGrounded;
-    private string _runParameter = "speed";
-    private string _jumpParameter = "isJump";
+
 
     private void Awake()
     {
@@ -40,9 +46,9 @@ public class PlayerMovement : MonoBehaviour
         transform.position += new Vector3(direction * _moveSpeed * Time.deltaTime, 0);
 
         if (direction != idleSpeed)
-            _playerAnimator.SetFloat(_runParameter, _moveSpeed);
+            _playerAnimator.SetFloat(SpeedParameter, _moveSpeed);
         else
-            _playerAnimator.SetFloat(_runParameter, idleSpeed);
+            _playerAnimator.SetFloat(SpeedParameter, idleSpeed);
     }
 
     private void Rotate()
@@ -56,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        RaycastHit2D hit = Physics2D.Raycast(_playerRigidbody.position, Vector2.down, _rayDistance, LayerMask.GetMask("Ground"));
+        RaycastHit2D hit = Physics2D.Raycast(_playerRigidbody.position, Vector2.down, _rayDistance, _layer);
 
         if (hit.collider != null)
         {
@@ -64,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
             _isDoubleJump = false;
             _isJump = false;
 
-            _playerAnimator.SetBool(_jumpParameter, _isJump);
+            _playerAnimator.SetBool(IsJumpParameter, _isJump);
         }
         else
         {
@@ -78,14 +84,14 @@ public class PlayerMovement : MonoBehaviour
                 _playerRigidbody.AddForce(new Vector2(0, _jumpSpeed), ForceMode2D.Impulse);
 
                 _isJump = true;
-                _playerAnimator.SetBool(_jumpParameter, _isJump);
+                _playerAnimator.SetBool(IsJumpParameter, _isJump);
             }
             else if (!_isDoubleJump && _playerRigidbody.velocity.y < 0)
             {
                 _playerRigidbody.AddForce(new Vector2(0, _jumpSpeed), ForceMode2D.Impulse);
 
                 _isDoubleJump = true;
-                _playerAnimator.SetBool(_jumpParameter, _isDoubleJump);
+                _playerAnimator.SetBool(IsJumpParameter, _isDoubleJump);
             }
         }
     }
