@@ -13,9 +13,9 @@ public class EnemyAttack : MonoBehaviour
 
     private void Start() => _currentTimeForAttack = _maxTimeForAttack;
 
-    private void Update() => FindEnemy();
+    private void Update() => FindPlayer();
 
-    private void FindEnemy()
+    private void FindPlayer()
     {
         if (_searcher.Player == null)
         {

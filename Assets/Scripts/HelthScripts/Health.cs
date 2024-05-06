@@ -3,33 +3,38 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public float MaxHealth { get; private set; } = 100;
-    public float CurrentHealth { get; private set; }
+    [SerializeField] private float _maxHealth;
 
-    public event Action HealthChanged;
+    private float _currentHealth;
+    private float _minHealth = 0;
+
+    public event Action HealthDecreased;
     public event Action OwnerDied;
 
-    private void Start() => CurrentHealth = MaxHealth;
+    private void Start() => _currentHealth = _maxHealth;
 
-    public void TakeHeal(float heal)
+    public void TakeHeal(HealKit healKit)
     {
-        if (heal >= 0)
-            CurrentHealth += heal;
+        if (_currentHealth == _maxHealth)
+            return;
+
+        _currentHealth += healKit.Heal;
+        _currentHealth = Mathf.Clamp(_currentHealth, _minHealth, _maxHealth);
+
+        Destroy(healKit.gameObject);
     }
 
     public void TakeDamage(float damage)
     {
         if (damage >= 0)
         {
-            if (CurrentHealth > 0)
+            if (_currentHealth > 0)
             {
-                float minHealth = 0;
-
-                CurrentHealth = Mathf.Clamp(CurrentHealth, minHealth, CurrentHealth - damage);
-                HealthChanged?.Invoke();
+                _currentHealth = Mathf.Clamp(_currentHealth, _minHealth, _currentHealth - damage);
+                HealthDecreased?.Invoke();
             }
 
-            if (CurrentHealth <= 0)
+            if (_currentHealth <= 0)
                 OwnerDied?.Invoke();
         }
     }
