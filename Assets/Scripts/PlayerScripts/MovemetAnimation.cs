@@ -7,7 +7,7 @@ public class MovemetAnimation : MonoBehaviour
     private const string IsJump = nameof(IsJump);
 
     [SerializeField] private InputProcessing _input;
-    [SerializeField] private PlayerMovement _playerMovement;
+    [SerializeField] private PlayerMovement _movement;
 
     private Animator _playerAnimator;
 
@@ -27,7 +27,7 @@ public class MovemetAnimation : MonoBehaviour
         float idleSpeed = 0;
 
         if (_input.Direction != idleSpeed)
-            _playerAnimator.SetFloat(Speed, _playerMovement.GetMoveSpeed());
+            _playerAnimator.SetFloat(Speed, _movement.GetMoveSpeed());
         else
             _playerAnimator.SetFloat(Speed, idleSpeed);
     }
