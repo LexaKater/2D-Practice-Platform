@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+public class EnemyMovement : Grounded
 {
     [SerializeField] private Transform[] _waypoints;
     [SerializeField] private PlayerSearcher _searcher;
@@ -27,7 +27,7 @@ public class EnemyMovement : MonoBehaviour
 
             Vector2 distanceToPlayer = transform.position - _searcher.Player.transform.position;
 
-            if (distanceToPlayer.x < _rangeForStop)
+            if (distanceToPlayer.x < _rangeForStop && distanceToPlayer.x > -_rangeForStop)
                 return;
         }
 

@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class InputProcessing : MonoBehaviour
 {
-    [SerializeField] private FindGround _ground;
+    [SerializeField] private Grounded _ground;
 
-    public bool CanJump { get; private set; } = false;
-    public bool CanRotate { get; private set; } = false;
     public float Direction { get; private set; }
+    public bool IsRotate { get; private set; } = false;
+    public bool CanJump { get; private set; } = false;
 
     private void Update()
     {
@@ -20,17 +20,17 @@ public class InputProcessing : MonoBehaviour
     private void SetRotate()
     {
         if (Input.GetKeyDown(KeyCode.A))
-            CanRotate = true;
+            IsRotate = true;
 
         if (Input.GetKeyDown(KeyCode.D))
-            CanRotate = false;
+            IsRotate = false;
     }
 
     private void TryJump()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (_ground.IsGrounded)
+            if (_ground.TryFindGround())
                 CanJump = true;
             else
                 CanJump = false;

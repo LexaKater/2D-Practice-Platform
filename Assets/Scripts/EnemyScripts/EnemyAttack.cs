@@ -9,7 +9,6 @@ public class EnemyAttack : MonoBehaviour
 
     private float _currentTimeForAttack;
     private bool _isAttack = false;
-    private Transform _target;
 
     private void Start() => _currentTimeForAttack = _maxTimeForAttack;
 
@@ -26,21 +25,24 @@ public class EnemyAttack : MonoBehaviour
         }
         else
         {
-            _target = _searcher.Player.transform;
+            Vector2 distanceToPlayer = transform.position - _searcher.Player.transform.position;
 
-            Vector2 distanceToPlayer = transform.position - _target.position;
+            Debug.Log(distanceToPlayer.x);
 
-            if (_searcher.Player.TryGetComponent(out Health health) || distanceToPlayer.x < _rangeForAttack)
+            if (_searcher.Player.TryGetComponent(out Health health))
             {
-                Attack();
+                if (distanceToPlayer.x < _rangeForAttack && distanceToPlayer.x > -_rangeForAttack)
+                {
+                    TryAttack();
 
-                if (_isAttack)
-                    health.TakeDamage(_damage);
+                    if (_isAttack)
+                        health.TakeDamage(_damage);
+                }
             }
         }
     }
 
-    private void Attack()
+    private void TryAttack()
     {
         if (_currentTimeForAttack >= 0)
         {

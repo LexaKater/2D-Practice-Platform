@@ -23,11 +23,9 @@ public class PlayerMovement : MonoBehaviour
         Move();
     }
 
-    public float GetMoveSpeed() => _moveSpeed;
-
     private void Move() => transform.position += new Vector3(_input.Direction * _moveSpeed * Time.deltaTime, 0);
 
-    private void Rotate() => _playerSprite.flipX = _input.CanRotate;
+    private void Rotate() => _playerSprite.flipX = _input.IsRotate;
 
     private void Jump()
     {

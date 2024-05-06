@@ -12,8 +12,9 @@ public class Wallet : MonoBehaviour
         if (collision.TryGetComponent(out Coin coin))
         {
             ++CountCoin;
+
             Destroy(collision.gameObject);
             AmountChenged?.Invoke();
         }
-    }   
+    }
 }

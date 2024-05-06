@@ -2,34 +2,25 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private float _rayDistance;
     [SerializeField] private float _damage;
     [SerializeField] private float _maxTimeForAttack;
-    [SerializeField] private LayerMask _layer;
+    [SerializeField] private SearchEnemy _searcher;
 
-    private Vector2 _direction;
     private float _currentTimeForAttack;
     private bool _isAttack = false;
 
     private void Start() => _currentTimeForAttack = _maxTimeForAttack;
 
-    private void Update() => FindEnemy();
+    private void Update() => Attack();
 
-    private void FindEnemy()
+    private void Attack()
     {
-        SetDirection();
-
-        RaycastHit2D enemy = Physics2D.Raycast(transform.position, _direction, _rayDistance, _layer);
-
-        if (enemy.collider != null)
+        if (_searcher.TryFindEnemy())
         {
-            if (enemy.collider.TryGetComponent(out Health health))
-            {
-                Attack();
+            TryAttack();
 
-                if (_isAttack)
-                    health.TakeDamage(_damage);
-            }
+            if (_isAttack)
+                _searcher.GetEnemy().TakeDamage(_damage);
         }
         else
         {
@@ -38,7 +29,7 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    private void Attack()
+    private void TryAttack()
     {
         if (_currentTimeForAttack > 0)
         {
@@ -50,14 +41,5 @@ public class PlayerAttack : MonoBehaviour
             _currentTimeForAttack = _maxTimeForAttack;
             _isAttack = true;
         }
-    }
-
-    private void SetDirection()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-            _direction = Vector2.left;
-
-        if (Input.GetKeyDown(KeyCode.D))
-            _direction = Vector2.right;
     }
 }

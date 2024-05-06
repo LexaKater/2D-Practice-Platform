@@ -3,11 +3,11 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class HitAnimation : MonoBehaviour
 {
-    private const string DamageTriger = nameof(DamageTriger);
-
     [SerializeField] private Health _health;
 
     private Animator _animator;
+
+    public readonly int DamageTriger = Animator.StringToHash(nameof(DamageTriger));
 
     private void Start() => _animator = GetComponent<Animator>();
 

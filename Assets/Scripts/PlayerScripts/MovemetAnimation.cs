@@ -3,18 +3,15 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class MovemetAnimation : MonoBehaviour
 {
-    private const string Speed = nameof(Speed);
-    private const string IsJump = nameof(IsJump);
-
     [SerializeField] private InputProcessing _input;
     [SerializeField] private PlayerMovement _movement;
 
     private Animator _playerAnimator;
 
-    private void Start()
-    {
-        _playerAnimator = GetComponent<Animator>();
-    }
+    public readonly int Speed = Animator.StringToHash(nameof(Speed));
+    public readonly int IsJump = Animator.StringToHash(nameof(IsJump));
+
+    private void Start() => _playerAnimator = GetComponent<Animator>();
 
     private void Update()
     {
@@ -25,9 +22,10 @@ public class MovemetAnimation : MonoBehaviour
     private void PlayMoveAnimation()
     {
         float idleSpeed = 0;
+        float moveSpeed = 1;
 
         if (_input.Direction != idleSpeed)
-            _playerAnimator.SetFloat(Speed, _movement.GetMoveSpeed());
+            _playerAnimator.SetFloat(Speed, moveSpeed);
         else
             _playerAnimator.SetFloat(Speed, idleSpeed);
     }
