@@ -22,6 +22,8 @@ public class Health : MonoBehaviour
         _currentHealth = Mathf.Clamp(_currentHealth, _minHealth, _maxHealth);
 
         Destroy(healKit.gameObject);
+
+        Debug.Log(_currentHealth);
     }
 
     public void TakeDamage(float damage)
@@ -32,6 +34,7 @@ public class Health : MonoBehaviour
             {
                 _currentHealth = Mathf.Clamp(_currentHealth, _minHealth, _currentHealth - damage);
                 HealthDecreased?.Invoke();
+                Debug.Log(_currentHealth);
             }
 
             if (_currentHealth <= 0)
