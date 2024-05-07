@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerSearcher : MonoBehaviour
+public class SearchPlayer : MonoBehaviour
 {
     public PlayerMovement Player { get; private set; }
 

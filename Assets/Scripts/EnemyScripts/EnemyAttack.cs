@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    [SerializeField] private PlayerSearcher _searcher;
+    [SerializeField] private SearchPlayer _searcher;
     [SerializeField, Range(0f, 10f)] private float _rangeForAttack;
     [SerializeField, Range(0f, 10f)] private float _maxTimeForAttack;
     [SerializeField, Range(0f, 10f)] private float _damage;
@@ -26,8 +26,6 @@ public class EnemyAttack : MonoBehaviour
         else
         {
             Vector2 distanceToPlayer = transform.position - _searcher.Player.transform.position;
-
-            Debug.Log(distanceToPlayer.x);
 
             if (_searcher.Player.TryGetComponent(out Health health))
             {

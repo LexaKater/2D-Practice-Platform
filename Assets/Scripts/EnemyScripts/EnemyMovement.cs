@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyMovement : Grounded
 {
     [SerializeField] private Transform[] _waypoints;
-    [SerializeField] private PlayerSearcher _searcher;
+    [SerializeField] private SearchPlayer _searcher;
     [SerializeField, Range(0f, 10f)] private float _speed;
     [SerializeField, Range(-10f, 10f)] private float _rangeForStop;
 
