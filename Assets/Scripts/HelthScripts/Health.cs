@@ -5,39 +5,53 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private float _maxHealth;
 
-    private float _currentHealth;
+    public float CurrentHealth { get; private set; }
+
     private float _minHealth = 0;
 
     public event Action HealthDecreased;
+    public event Action HealthIncreased;
     public event Action OwnerDied;
 
-    private void Start() => _currentHealth = _maxHealth;
+    private void Awake() => CurrentHealth = _maxHealth;
+
+    public float GetMaxHealth() => _maxHealth;
 
     public void TakeHeal(HealKit healKit)
     {
-        if (_currentHealth == _maxHealth)
+        if (CurrentHealth == _maxHealth)
             return;
 
-        _currentHealth += healKit.Heal;
-        _currentHealth = Mathf.Clamp(_currentHealth, _minHealth, _maxHealth);
+        CurrentHealth += healKit.Heal;
+        CurrentHealth = Mathf.Clamp(CurrentHealth, _minHealth, _maxHealth);
 
         Destroy(healKit.gameObject);
 
-        Debug.Log(_currentHealth);
+        HealthIncreased?.Invoke();
+    }
+
+    public void TakeHeal(float heal)
+    {
+        if (CurrentHealth == _maxHealth)
+            return;
+
+        CurrentHealth += heal;
+        CurrentHealth = Mathf.Clamp(CurrentHealth, _minHealth, _maxHealth);
+
+        HealthIncreased?.Invoke();
     }
 
     public void TakeDamage(float damage)
     {
         if (damage >= 0)
         {
-            if (_currentHealth > 0)
+            if (CurrentHealth > 0)
             {
-                _currentHealth = Mathf.Clamp(_currentHealth, _minHealth, _currentHealth - damage);
+                CurrentHealth = Mathf.Clamp(CurrentHealth, _minHealth, CurrentHealth - damage);
                 HealthDecreased?.Invoke();
-                Debug.Log(_currentHealth);
             }
 
-            if (_currentHealth <= 0)
+            if (CurrentHealth <= 0)
                 OwnerDied?.Invoke();
         }
     }
