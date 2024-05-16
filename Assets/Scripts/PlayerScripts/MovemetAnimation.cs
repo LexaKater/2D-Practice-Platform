@@ -6,10 +6,10 @@ public class MovemetAnimation : MonoBehaviour
     [SerializeField] private InputProcessing _input;
     [SerializeField] private PlayerMovement _movement;
 
-    private Animator _playerAnimator;
-
     public readonly int Speed = Animator.StringToHash(nameof(Speed));
     public readonly int IsJump = Animator.StringToHash(nameof(IsJump));
+
+    private Animator _playerAnimator;  
 
     private void Start() => _playerAnimator = GetComponent<Animator>();
 

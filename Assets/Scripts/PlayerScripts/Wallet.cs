@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class Wallet : MonoBehaviour
 {
-    public int CountCoin { get; private set; } = 0;
-
     public event Action AmountChenged;
+
+    public int CountCoin { get; private set; } = 0;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

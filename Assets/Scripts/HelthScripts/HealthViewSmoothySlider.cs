@@ -1,62 +1,34 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthView : MonoBehaviour
+public class HealthViewSmoothySlider : MonoBehaviour
 {
     [SerializeField] private Health _health;
-    [SerializeField] private TextMeshProUGUI _healthView;
-    [SerializeField] private Slider _healthSlider;
     [SerializeField] private Slider _smoothlyHealthSlider;
 
-    private float _maxHealth;
     private Coroutine _coroutine;
 
-    private void Start()
-    {
-        _maxHealth = _health.GetMaxHealth();
-
-        ShowHealthText();
-
-        _healthSlider.value = _maxHealth;
-        _smoothlyHealthSlider.value = _maxHealth;
-    }
+    private void Start() => _smoothlyHealthSlider.value = _health.GetMaxHealth();
 
     private void OnEnable()
     {
-        _health.HealthDecreased += ShowHealthText;
-        _health.HealthIncreased += ShowHealthText;
-
-        _health.HealthDecreased += ShiftHelthSlider;
-        _health.HealthIncreased += ShiftHelthSlider;
-
         _health.HealthDecreased += SartSmoothlyShifting;
         _health.HealthIncreased += SartSmoothlyShifting;
     }
 
     private void OnDisable()
     {
-        _health.HealthDecreased -= ShowHealthText;
-        _health.HealthIncreased -= ShowHealthText;
-
-        _health.HealthDecreased -= ShiftHelthSlider;
-        _health.HealthIncreased -= ShiftHelthSlider;
-
         _health.HealthDecreased -= SartSmoothlyShifting;
         _health.HealthIncreased -= SartSmoothlyShifting;
     }
-
-    private void ShowHealthText() => _healthView.text = $"{_health.CurrentHealth} | {_maxHealth}";
-
-    private void ShiftHelthSlider() => _healthSlider.value = _health.CurrentHealth;
 
     private void SartSmoothlyShifting()
     {
         if (_coroutine != null)
             StopCoroutine(_coroutine);
 
-        StartCoroutine(ShiftSmootlyHealthSlider());
+        _coroutine = StartCoroutine(ShiftSmootlyHealthSlider());
     }
 
     private IEnumerator ShiftSmootlyHealthSlider()

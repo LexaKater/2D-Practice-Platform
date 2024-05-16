@@ -5,13 +5,13 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private float _maxHealth;
 
-    public float CurrentHealth { get; private set; }
-
     private float _minHealth = 0;
 
     public event Action HealthDecreased;
     public event Action HealthIncreased;
     public event Action OwnerDied;
+
+    public float CurrentHealth { get; private set; }
 
     private void Awake() => CurrentHealth = _maxHealth;
 

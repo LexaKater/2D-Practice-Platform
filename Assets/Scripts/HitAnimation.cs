@@ -5,9 +5,9 @@ public class HitAnimation : MonoBehaviour
 {
     [SerializeField] private Health _health;
 
-    private Animator _animator;
-
     public readonly int DamageTriger = Animator.StringToHash(nameof(DamageTriger));
+
+    private Animator _animator;
 
     private void Start() => _animator = GetComponent<Animator>();
 
