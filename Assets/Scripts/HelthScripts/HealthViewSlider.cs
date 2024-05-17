@@ -1,7 +1,7 @@
 using UnityEngine.UI;
 using UnityEngine;
 
-public class HealthViewSlider : MonoBehaviour
+public class HealthViewSlider : MonoBehaviour , ISliderShiftable
 {
     [SerializeField] private Health _health;
     [SerializeField] private Slider _healthSlider;
@@ -10,15 +10,15 @@ public class HealthViewSlider : MonoBehaviour
 
     private void OnEnable()
     {
-        _health.HealthDecreased += ShiftHelthSlider;
-        _health.HealthIncreased += ShiftHelthSlider;
+        _health.HealthDecreased += ShiftSlider;
+        _health.HealthIncreased += ShiftSlider;
     }
 
     private void OnDisable()
     {
-        _health.HealthDecreased -= ShiftHelthSlider;
-        _health.HealthIncreased -= ShiftHelthSlider;
+        _health.HealthDecreased -= ShiftSlider;
+        _health.HealthIncreased -= ShiftSlider;
     }
 
-    private void ShiftHelthSlider() => _healthSlider.value = _health.CurrentHealth;
+    public void ShiftSlider() => _healthSlider.value = _health.CurrentHealth;
 }
