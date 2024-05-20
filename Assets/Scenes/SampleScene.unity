@@ -731,7 +731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: {fileID: 1854333966}
-  _healthSlider: {fileID: 212900042}
+  HealthSlider: {fileID: 212900042}
 --- !u!1 &220374119
 GameObject:
   m_ObjectHideFlags: 0
@@ -4964,7 +4964,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: {fileID: 1854333966}
-  _smoothlyHealthSlider: {fileID: 783404667}
+  HealthSlider: {fileID: 783404667}
   _delay: 0.02
   _speed: 0.4
 --- !u!1 &789421473
@@ -5343,7 +5343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: {fileID: 483989296}
-  _smoothlyHealthSlider: {fileID: 867279400}
+  HealthSlider: {fileID: 867279400}
   _delay: 0.02
   _speed: 0.4
 --- !u!114 &867279400
@@ -15139,7 +15139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: {fileID: 1699414969}
-  _smoothlyHealthSlider: {fileID: 1954200376}
+  HealthSlider: {fileID: 1954200376}
   _delay: 0.02
   _speed: 0.4
 --- !u!114 &1954200376
