@@ -1,45 +1,28 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class HealthViewSmoothlySlider : MonoBehaviour, ISliderShiftable
+public class HealthViewSmoothlySlider : SliderShifter
 {
-    [SerializeField] private Health _health;
-    [SerializeField] private Slider _smoothlyHealthSlider;
     [SerializeField, Range(0, 10)] private float _delay = 0.02f;
     [SerializeField, Range(0, 10)] private float _speed = 0.4f;
 
     private Coroutine _coroutine;
 
-    private void Start() => _smoothlyHealthSlider.value = _health.GetMaxHealth();
-
-    private void OnEnable()
-    {
-        _health.HealthDecreased += ShiftSlider;
-        _health.HealthIncreased += ShiftSlider;
-    }
-
-    private void OnDisable()
-    {
-        _health.HealthDecreased -= ShiftSlider;
-        _health.HealthIncreased -= ShiftSlider;
-    }
-
-    public void ShiftSlider()
+    protected override void ShiftSlider()
     {
         if (_coroutine != null)
             StopCoroutine(_coroutine);
 
-        _coroutine = StartCoroutine(ShiftSmoothlySlider());
+        _coroutine = StartCoroutine(StartShiftSmoothlySlider());
     }
 
-    private IEnumerator ShiftSmoothlySlider()
+    private IEnumerator StartShiftSmoothlySlider()
     {
         WaitForSeconds wait = new WaitForSeconds(_delay);
 
-        while (_smoothlyHealthSlider.value != _health.CurrentHealth)
+        while (HealthSlider.value != GetCurrentHealth())
         {
-            _smoothlyHealthSlider.value = Mathf.MoveTowards(_smoothlyHealthSlider.value, _health.CurrentHealth, _speed);
+            HealthSlider.value = Mathf.MoveTowards(HealthSlider.value, GetCurrentHealth(), _speed);
 
             yield return wait;
         }
