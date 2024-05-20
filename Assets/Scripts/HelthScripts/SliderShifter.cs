@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public abstract class SliderShifter : MonoBehaviour
 {
     [SerializeField] private Health _health;
-    [SerializeField] protected Slider HealthSlider;
+    [SerializeField] private Slider HealthSlider;
 
     private void Start() => HealthSlider.value = _health.GetMaxHealth();
 
