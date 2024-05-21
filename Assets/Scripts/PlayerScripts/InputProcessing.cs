@@ -3,16 +3,19 @@ using UnityEngine;
 public class InputProcessing : MonoBehaviour
 {
     [SerializeField] private Grounded _ground;
+    [SerializeField] private SearchEnemy _searcher;
 
     public float Direction { get; private set; }
     public bool IsRotate { get; private set; } = false;
     public bool CanJump { get; private set; } = false;
+    public bool CanUseAbility { get; private set; } = false;
 
     private void Update()
     {
         SetRotate();
         SetDirection();
         TryJump();
+        TryUseAbility();
     }
 
     private void SetDirection() => Direction = Input.GetAxis("Horizontal");
@@ -28,16 +31,22 @@ public class InputProcessing : MonoBehaviour
 
     private void TryJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && _ground.TryFindGround())
+            CanJump = true;
+        else
+            CanJump = false;
+    }
+
+    private void TryUseAbility()
+    {
+        if (Input.GetKeyDown(KeyCode.F) && _searcher.IsFind)
         {
-            if (_ground.TryFindGround())
-                CanJump = true;
-            else
-                CanJump = false;
+            CanUseAbility = true;
+            _searcher.FindClosestEnemy();
         }
         else
         {
-            CanJump = false;
+            CanUseAbility = false;
         }
     }
 }

@@ -20,7 +20,7 @@ public class PlayerAttack : MonoBehaviour
             TryAttack();
 
             if (_isAttack)
-                _searcher.GetEnemy().TakeDamage(_damage);
+                _searcher.Enemy.TakeDamage(_damage);
         }
         else
         {
